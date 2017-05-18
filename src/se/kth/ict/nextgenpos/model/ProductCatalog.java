@@ -2,9 +2,6 @@ package se.kth.ict.nextgenpos.model;
 
 import java.util.Map;
 import java.util.HashMap;
-import se.kth.ict.nextgenpos.model.Observer;
-import se.kth.ict.nextgenpos.model.ItemNotFoundException;
-
 
 /**
  * This class is responsible for all access to the product database.
@@ -29,7 +26,7 @@ public class ProductCatalog {
     * Sends notification to observer about item being registered
     * @param itemName Item being registered
     */
-    private void notifyObserver(String itemName){
+    private void notifyObserver(ProductSpecification itemName){
     observer.notify(itemName);
     }
     
@@ -51,11 +48,10 @@ public class ProductCatalog {
      */
     public ProductSpecification findSpecification(int itemId) throws ItemNotFoundException {
 	    if (products.get(itemId) == null){
-                throw new ItemNotFoundException("Product with ID " + itemId + " does not exist.");
+                throw new ItemNotFoundException("Item with ID " + itemId + " does not exist.");
             }
     ProductSpecification product = products.get(itemId);
-    String productName = product.getName();
-    notifyObserver(productName);
+    notifyObserver(product);
     return product;
     }
 }

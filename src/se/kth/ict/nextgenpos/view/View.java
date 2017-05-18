@@ -12,7 +12,7 @@ import se.kth.ict.nextgenpos.model.ProductSpecification;
  */
 public class View implements Observer{
     private Controller cont;
-    private List<String> listOfItems = new ArrayList<String>();
+    private List<ProductSpecification> items = new ArrayList<ProductSpecification>();
 
     /**
      * Creates a new View.
@@ -28,23 +28,25 @@ public class View implements Observer{
      */
     public void test() {
 	cont.makeNewSale();
-	enterItem(1);
-        enterItem(2);
-        enterItem(3);
-	enterItem(10);
+        for (int i = 1; i < 5; i++) {
+            try{
+                enterItem(i);
+            } catch (ItemNotFoundException itemNotFound){
+                System.out.println(itemNotFound.getMessage());
+            }
+        }
     }
    /**
     * registers an item using its item id
     * @param itemId id number of item
     */
-    private void enterItem(int itemId) {
-    try {
+    private void enterItem(int itemId) throws ItemNotFoundException {
+
     int quantity = 1;
     System.out.println("");
-    System.out.println("Result for itemID " + itemId + ": " + cont.enterItem(itemId, quantity));
-    } catch (ItemNotFoundException itemNotFound) {
-    System.out.println("Couldnt find item in catalog");
-    }
+    System.out.println("Result for " + cont.enterItem(itemId, quantity));
+    System.out.println("");
+
  }
 
    /**
@@ -52,10 +54,11 @@ public class View implements Observer{
     *
     * @param itemName name of the item
     */
-    public void notify(String itemName) {
-        listOfItems.add(itemName);
+    @Override
+    public void notify(ProductSpecification itemName) {
+        items.add(itemName);
         System.out.println("Items currently registered:");
-        listOfItems.forEach((itemToShow) -> {
+        items.forEach((itemToShow) -> {
             System.out.println(itemToShow);
         });
     System.out.println("");

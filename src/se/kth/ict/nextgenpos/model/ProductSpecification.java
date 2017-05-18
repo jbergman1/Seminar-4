@@ -26,9 +26,7 @@ public class ProductSpecification {
     }
 
     //More get methods.
-    public String getName(){
-        return name;
-    }
+
     public String toString() {
 	return "Product id: " + productId + ", name: " + name + 
 	    ", price:" + price + "\ndescription: " + description;

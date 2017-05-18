@@ -51,9 +51,13 @@ public class Controller {
 	if (sale == null) {
 	    throw new IllegalStateException("enterItem() called before makeNewSale()");
 	}
+        try { 
 	ProductSpecification spec = catalog.findSpecification(itemId);
 	sale.addItem(spec, quantity);
 	return spec;
+        } catch (ItemNotFoundException itemNotFound){
+            throw new ItemNotFoundException("Item with ID " + itemId + " does not exist.");
+        }
     }
 
     /**
